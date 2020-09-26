@@ -1,0 +1,8 @@
+Project felépítése:
+	A. változat
+		Egyben kezeljük a frontend és backend részt. Például thymeleaf segítségével a frontend oldalról, backend oldalról pedig
+		@Controller, @RequestMapping("/tortenetek") és a Model segítségével. 
+	B. változat
+		Külön válik a frontend a backendtől teljesen ->
+			A frontend meg van írva egy js keretrendszer segítségével, pl. Angular, React
+			A backend részről pedig csak kiadjuk az adatot @RestController, @RequestMapping("/tortenetek"), @JsonBackReference (idegen kulcs esetén fontos, amikor egyik objektumba ágyazódik a másik) segítségével. Ilyenkor egy json-t adunk át, vagy xml-t, esetleg sima text-et, amit a frontend feldolgoz.
