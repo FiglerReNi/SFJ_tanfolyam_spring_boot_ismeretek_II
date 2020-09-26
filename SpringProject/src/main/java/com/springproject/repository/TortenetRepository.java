@@ -2,7 +2,9 @@ package com.springproject.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.springproject.domain.Tortenet;
@@ -18,8 +20,22 @@ public interface TortenetRepository extends CrudRepository<Tortenet, Long>{
 	//1-et akarunk visszaadni az elsőt amit megtalál dátum szerint a legfrissebbet;
 	Tortenet findFirstByOrderByPostedDesc();
 
+	//A VÁLTOZAT -JPA
 	//Cím alapján keresünk egyet
-	Tortenet findByTitle(String title);
+	//Tortenet findByTitle(String title);
+	
+	//B VÁLTOZAT -NATIV SQL
+		//a. paraméter megadás ?-el
+	//@Query(value = "SELECT * FROM tortenetek WHERE cim = ?1 LIMIT 1", nativeQuery=true)
+	//Tortenet findByTitle(String title);
+		//b. paraméter megadás name-el
+	//@Query(value = "SELECT * FROM tortenetek WHERE cim = :cim LIMIT 1", nativeQuery=true)
+	//Tortenet findByTitle(@Param("cim") String title);
+	
+	//C VÁLTOZAT JPQL - objetumként tekint a visszatérő eredményre, nem sorként, from után az entity neve kell, de a where feltételbe
+	//már az objektum osztályváltozó neve
+	@Query(value="SELECT t FROM tortenetek t WHERE t.title = :cim")
+	Tortenet findByTitle(@Param("cim") String title);
 	
 	//Blogger alapján keres
 	List<Tortenet> findAllByBloggerNameOrderByPostedDesc(String name);
