@@ -1,0 +1,7 @@
+INSERT INTO bloggerek (id, name, age) VALUES (2, 'FReni', 25)
+INSERT INTO bloggerek (id, name, age) VALUES (3, 'FReni2', 25)
+INSERT INTO tortenetek (id, cim, content, posted, blogger_id) VALUES (6, 'Teszt1', 'Teszt tartalom', '2020-09-25', (SELECT id FROM bloggerek WHERE name = 'FReni'))
+INSERT INTO tortenetek (id, cim, content, posted, blogger_id) VALUES (2, 'Teszt3', 'Teszt tartalom3', '2020-09-25', (SELECT id FROM bloggerek WHERE name = 'FReni'))
+INSERT INTO tortenetek (id, cim, content, posted, blogger_id) VALUES (3, 'Teszt4', 'Teszt tartalom4', '2020-09-25', (SELECT id FROM bloggerek WHERE name = 'FReni2'))
+INSERT INTO tortenetek (id, cim, content, posted, blogger_id) VALUES (4, 'Teszt5', 'Teszt tartalom5', '2020-09-25', (SELECT id FROM bloggerek WHERE name = 'FReni2'))
+INSERT INTO tortenetek (id, cim, content, posted, blogger_id) VALUES (5, 'Szia', 'Teszt tartalom5', '2020-09-25', (SELECT id FROM bloggerek WHERE name = 'FReni2'))
