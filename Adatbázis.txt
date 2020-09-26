@@ -1,0 +1,5 @@
+JPA használata esetén is van lehetőség sql query-ket használni
+	@Query annotáció kell hozzá
+	Két lehetőség van:
+		- natív SQL
+		- JPQL: objektumként tekint a visszatérő adatra
