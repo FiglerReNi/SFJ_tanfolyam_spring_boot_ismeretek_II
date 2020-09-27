@@ -40,4 +40,9 @@ Példa:
 		spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults = false
 		A tábla nevek kisbetűsek kell legyenek, ezért az Entity mellett a name-l át kell nevezni
 			pl.: @Entity(name="bloggerek")
-			
+
+Linkek:
+	www.heroku.com
+	https://dashboard.heroku.com/apps/herokualkalmazas
+	https://data.heroku.com/datastores/9929aff1-c6ea-4b3f-9d3c-e8d82555e603
+	https://heroku-data-explorer.herokuapp.com/#/
