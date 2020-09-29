@@ -11,3 +11,16 @@ Működése:
 			Alap username: user
 			Alap jelszó: Generálja a Spring Security, a konzolon jelenik meg
 	- Az alap username + jelszó megváltoztatható az application.propertiesben
+	
+Felhsználás:
+(@Secured)
+	- Megadhatjuk, hogy melyik kontrollerben, melyik függvényt milyen jogosultságú felhasználó érhet el.
+		-> ehhez egy configurációs osztályt hozunk létre a @EnableGlobalMethodSecurity(securedEnabled = true) annotációval ellátva
+		-> ki kell terjeszteni a  WebSecurityConfigurerAdapter ősosztályt
+		-> szerepköröket generálunk az application.propertiesben
+		-> 	<dependency>
+	   	 	<groupId>org.springframework.security</groupId>
+	   	 	<artifactId>spring-security-config</artifactId>
+			</dependency>
+		-> az útvonal fölött megadhatom, hogy melyik szerepkörrel lehessen elérni az útvonalat: @Secured(value={"ROLE_szerepkör"})
+		-> https://www.baeldung.com/spring-security-method-security
