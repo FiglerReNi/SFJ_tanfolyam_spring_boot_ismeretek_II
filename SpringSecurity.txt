@@ -24,3 +24,45 @@ Felhsználás:
 			</dependency>
 		-> az útvonal fölött megadhatom, hogy melyik szerepkörrel lehessen elérni az útvonalat: @Secured(value={"ROLE_szerepkör"})
 		-> https://www.baeldung.com/spring-security-method-security
+		
+Felhasználók hozzáadása:
+	-> az application.propertiesben az alap felhasználó + user írható felül (éles környezetben nem definiálunk itt felhasználó + jelszót, mert biztonsági kockázatot jelent)
+	-> általában a felhasználó adatbázisból jönnek (itt titkosítva tudjuk tárolni őket, biztonságosabb), de ha valami miatt ez nem megoldás, vagy például teszthez kell, akkor
+	-> kódban is definiálható a securityben felhasználó + jogkör, az alap beállítások felülírásával (de éles környezetben ilyet sem csinálunk)
+	-> hitelesítés konfigurálása: ConfigureAuth(AuthenticationManagerBuilder auth)
+	-> szerver viselkedés konfigurálása: A http security felügyeli a http forgalmat a szerver és a felhasználó között, ebbe szólhatunk bele és meghatározhatjuk, hogy mihez adunk hozzáférést, például mp3 fájlokhoz nem stb.
+		Ezt úgy érdemes kialakítani, hogy először mindent kizárunk és nem engedünk szinte semmit. És ez után nyitunk ki dolgokat.
+		Pl. a főoldalt bárki elérheti, aztán az admin oldalt az admin elérheti stb.
+		
+Cross-site request forgery:
+	internet biztonsági kockázatok:
+		- különböző adatok ellopása 
+		- banki utalás a felhasználó saját számlájáról
+		- jelszófeltörések mellett sokkal jelentősebbek az egyéb eszközök
+			- a http ürlapokat, kitölthető formokat lehet másolni
+			- a bank oldalán például kitöltöm a felhasználónevem és jelszavam + amit még kérnek, majd cerébe kapok egy tokent, ami azonosít, amíg a bank oldalán vagyok. Ezt tárolja a böngésző.
+			- a pénzküldés felületen is egy űrlapot töltünk ki, majd küldés gomb. Az adatok Post-tal a bodyba kerülnek, ez biztonságosabb mint a get.
+			- a hackerek küldenek sok embernek emailt, egy linkkel hogy jelentkezzenek be a bankjukba például:
+				- vagy kamu oldalra visz a link, ahol ellopják a jelszót és felhasználó nevet
+				- vagy egy ártalmatlan oldalra vezetnek, ahol írok egy kommentet stb és rányomok a küldés gombra, a háttérben ezen az oldalon van definiálva egy form kitöltve összeggel számlaszámmal, és mondjuk ha nem rég voltam bejelentkezve a bankomba akkor a böngészőm még mindig lehet őrzi azt a tokent. Így a küldés gombra elmegy a banknak a kérés.
+	amit tehetünk:
+		- jó jelszó és minde oldalra más
+		- a bankok minden serverükre irányuló kérés esetén elkérik, hogy honnan érkezik a kérés (referer field - headerben van): banknak az oldaláról, vagy máshonnan, másik serverről. Ez nem mindig tud működni, van, hogy nem kerül bele a lekérés header részébe hogy honnan jön a kérés, a különböző böngészők, kiegészítő szoftverek, reklámblokkolók stb miatt.
+		A header rész hamisítható is.
+		- a bankok új módszere: a server a backendről a frontendre küld egy véletlen generált karakter sorozatot
+			ez a CSRF token (Cross-site request forgery token)
+			ezt egy hidden mezőben mellékelik a háttérben a formhoz, vagyis a hiteles oldalon ott lesz a token amikor elküldöm a lekérést és össze tudja hasonlítani a szerver a kiadott és kapottt tokent. A hacker hiába másolja le a formot, nem fogja tudni a véletlen számot hozzá.
+	A Spring Bootban a CSRF token technológia alapból aktiválva van a login formhoz.
+
+FrontEnd:
+	- a thymeleafnek van egy securityhez tartozó dependencyje: (ezzel elérünk bizonyos adatokat)
+			<dependency>
+				<groupId>org.thymeleaf.extras</groupId>
+				<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+				<version>2.1.2.RELEASE</version>
+			</dependency>
+	- ha saját login oldalt csinálunk, gondosodnunk kell róla, hogy erről az oldalról a beérkező adatok (felhasználónév + jelszó) vissza kerüljön a Spring Securityhez és elvégezhesse a bejelentkeztető folyamatot.
+	- alapból csak a login és logout oldalt tesszük elérhetővé. Bárhová akar menni a felhasználó nem tudja elérni. Ha bejelentkezett, akkor arra az oldalra/aloldalra kerül, amit eredetileg beírt a böngészőbe.
+	- nézetet és útvonalat több féle módon köthetünk össze:
+		- controllerrel (@Controller + @RequestMapping)
+		- olyan osztállyal ami implementálja a WebMvcConfigurer interfacet, itt ki tudjuk kérni a registry-t ami tárol kapcsolódási pontokat a nézetek és az útvonalak között. És ebbe bele tudunk nyúlni
