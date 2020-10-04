@@ -61,6 +61,7 @@ FrontEnd:
 				<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 				<version>2.1.2.RELEASE</version>
 			</dependency>
+	- namespace: xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-spring-security4"
 	- ha saját login oldalt csinálunk, gondosodnunk kell róla, hogy erről az oldalról a beérkező adatok (felhasználónév + jelszó) vissza kerüljön a Spring Securityhez és elvégezhesse a bejelentkeztető folyamatot.
 	- alapból csak a login és logout oldalt tesszük elérhetővé. Bárhová akar menni a felhasználó nem tudja elérni. Ha bejelentkezett, akkor arra az oldalra/aloldalra kerül, amit eredetileg beírt a böngészőbe.
 	- nézetet és útvonalat több féle módon köthetünk össze:

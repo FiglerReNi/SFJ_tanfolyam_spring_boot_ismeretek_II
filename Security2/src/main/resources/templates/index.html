@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<!-- A data-layout-decorate-l jelzem, hogy egy fregmentet szeretnék használni, a main egy sablon, ami bépíti ezt a html-t. Ezzel hívjuk meg, 
+	hogy tegye körbe -->
+<html lang="hu" layout:decorate="~{layouts/main}">
+	<head>
+		<meta charset="utf-8" />
+	</head>
+<body>
+	<!-- A mainben ugyanehhez a taghez fog beágyazódni ennek a htmlnek a saját tartalma -->
+	<div layout:fragment="SajatTartalom">
+		<h2>KezdĹ‘oldal</h2>
+	</div>
+</body>
+</html>

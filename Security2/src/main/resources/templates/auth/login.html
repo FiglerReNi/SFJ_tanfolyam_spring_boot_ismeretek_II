@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- A layout:decorator-al jelzem, hogy egy fregmentet szeretnék használni -->
+<html lang="hu" layout:decorate="~{layouts/main}">
+	<head>
+		<meta charset="utf-8" />
+	</head>
+	<body>
+		<!-- A mainben ugyanehhez a taghez fog beágyazódni ennek a htmlnek a saját tartalma -->
+		<div layout:fragment="SajatTartalom">
+			<form name="f" th:action="@{/login}" methods="post" class="form-signin">
+				<h2 class="form-signin-heading">Kérlek jelentkezz be</h2>
+				<div th:if="${param.error}" class="alert alert-danger">Hibás felhasználói név és jelszó</div>
+				<div th:if="${param.logout}" class="alert alert-success">Sikeresen kijelentkeztél</div>
+				<label for="username" class="sr-only">Felhasználói név</label>
+				<input type="text" id="username" name="username" class="form-control" placeholder="Username" required="true"/>
+				<label for="password" class="sr-only">Jelszó</label>
+				<input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true"/>
+				<div class="checkbox">
+					<label>
+						<input id="remember-me" name="remember-me" type="checkbox"/> Emlékezz rám
+					</label>
+				</div>
+				<button class="btn btn-lg btn-primary btn-block" type="submit">Bejelentkezés</button>
+			</form>
+		</div>
+	</body>
+</html>

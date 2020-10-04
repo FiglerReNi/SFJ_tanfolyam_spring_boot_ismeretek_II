@@ -39,14 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	//Szerver viselkedés konfigurálása
 	@Override
 	protected void configure(HttpSecurity httpSec) throws Exception{
-		/*A http security felügyeli a http forgalmat a szerver és a felhasználó között
-		 * Meghatározhatjuk, hogy mihez adunk hozzáférést, például mp3 fájlokhoz nem stb*/
-		/*Két módszer van:
-		 * 	- engedélyezve van minden és néhány dologra hozunk szabályt
-		 * 	- előbb tiltunk mindent és fokozatosan nyitunk ki hozzáféréseet (ez a jobb)*/
 		httpSec
-		//bizonyos requesteket engedélyezünk(első módszerre példa)
 			.authorizeRequests()
+			 	.antMatchers("/css/**").permitAll() 
 				.antMatchers("/admin/**")
 					.hasRole("ADMIN")
 					//ezzel minden lekérdezést authentikációhoz kötünk, így csak a login és logout page-t fogja elérni a felhasználó
@@ -63,12 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logout()
 					.logoutSuccessUrl("/login?logout")
 					.permitAll();
-				
-				
-				
-				
-	
-		
-				
+			
 	}		
 }

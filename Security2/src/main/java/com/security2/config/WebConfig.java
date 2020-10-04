@@ -1,10 +1,12 @@
 package com.security2.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 //Nézettel kapcsolatos dolgok állthatóak benne
+@Configuration
 public class WebConfig implements WebMvcConfigurer{
 	
 	/*A registry tárol kapcsolódási pontokat a nézetek és az útvonalak között

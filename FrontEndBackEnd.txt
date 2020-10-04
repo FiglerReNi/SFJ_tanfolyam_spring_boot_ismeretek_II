@@ -6,3 +6,12 @@ Project felépítése:
 		Külön válik a frontend a backendtől teljesen ->
 			A frontend meg van írva egy js keretrendszer segítségével, pl. Angular, React
 			A backend részről pedig csak kiadjuk az adatot @RestController, @RequestMapping("/tortenetek"), @JsonBackReference (idegen kulcs esetén fontos, amikor egyik objektumba ágyazódik a másik) segítségével. Ilyenkor egy json-t adunk át, vagy xml-t, esetleg sima text-et, amit a frontend feldolgoz.
+			
+Thymeleaf fregmentek:
+	- Minden honlapon vannak olyan tartalmak, amelyek nem változnak az oldalakon pl. header, menü, footer. Ezeket célszerű csak egyszer létrehozni. Erre jók a fregmentek. Ezeket bármelyik html-ben felhasználhatjuk. 
+	- kell hozzá egy plusz dependency
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency>
+	-namespace is: xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout
