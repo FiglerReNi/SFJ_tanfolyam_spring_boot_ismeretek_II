@@ -30,7 +30,10 @@
 				        <li class=""><a href="/bloggers">Bloggerek</a></li>
 				    </ul>
 				    <div class="navbar-text navbar-right">
+				    <!-- Ha be vagyunk jelentkezve akkor a sec:authentication-el kiveszi a user nevét és azt fogja használni -->
 				    Üdvözlünk <span sec:authentication="name">Anonymous </span>
+				    <!-- Ez a form csak akkor jelenjen meg, ha autentikálta magát a felhasználó:"isAuthenticated()" -el vizsgáljuk. 
+				    Ezzek a módszerrel tudjuk szűrni, hogy mi az amit csak bejelentkezve lehet látni például  -->
 			           <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
 				    		| <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Kijelentkezés</a>
 				      </form>

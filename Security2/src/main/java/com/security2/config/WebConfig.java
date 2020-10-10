@@ -1,9 +1,12 @@
 package com.security2.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 //Nézettel kapcsolatos dolgok állthatóak benne
 @Configuration
@@ -15,8 +18,14 @@ public class WebConfig implements WebMvcConfigurer{
 	public void addViewControllers(ViewControllerRegistry registry){
 		//hozzá adom az útvonalat és hogy hol van a html hozzá
 		registry.addViewController("/login").setViewName("auth/login");
-		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-		
+		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);		
 	}
+	
+	@Bean
+	public LayoutDialect layoutDialect() {
+	  return new LayoutDialect();
+	}
+
+
 
 }

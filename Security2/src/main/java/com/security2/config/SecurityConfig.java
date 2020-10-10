@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 		auth
 				// belső memóriában történő authentikációt hívom meg
-				// állítok a z authentikáción a következő userrel
+				// állítok az authentikáción a következő userrel
 			.inMemoryAuthentication()
 				// itt állítok be usert
 				.withUser("reni")
@@ -41,11 +41,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSec) throws Exception{
 		httpSec
 			.authorizeRequests()
-			 	.antMatchers("/css/**").permitAll() 
+			 	.antMatchers("/css/**", "/js/**", "/images/**").permitAll()
 				.antMatchers("/admin/**")
 					.hasRole("ADMIN")
 					//ezzel minden lekérdezést authentikációhoz kötünk, így csak a login és logout page-t fogja elérni a felhasználó
-					.anyRequest().authenticated()
+				.anyRequest().authenticated()
 				.and()	
 				.formLogin()
 				//megadjuk, hogy ha kell a bejelentkező oldal az milyen útvonalon érhető el (ezzel felülírjuk az alapértelmezettet), ekkor
