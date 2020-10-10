@@ -15,3 +15,17 @@ Thymeleaf fregmentek:
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 		</dependency>
 	-namespace is: xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout
+	
+Regisztrációs felület:
+	- html form
+	- SecurityConfigban engedélyezni az elérési utat (a html-hez és a feldolgozó oldalhoz is)
+	- Login formra link a regisztrációhoz
+	- controller requestMappinggel útvonal(a html-hez és a feldolgozó oldalhoz is)
+	- a html megjelenítésekor átadunk egy üres usert is a Model-el
+	- ezt feltölti a form és a /reg átveszi (a feldolgozó oldal) @ModelAttribute annotációval jön át a form adata
+	- az adatot elmentjük pl egy adatbázisba
+	- login oldalra irányítjuk
+	Fontos: jelszót kétszer egymás után be kell kérni		
+			kell validációt csinálni
+			titkosítjuk a jelszavakat
+			e-mailből aktiváltatjuk
