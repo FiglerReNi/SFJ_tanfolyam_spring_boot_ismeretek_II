@@ -42,6 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSec
 			.authorizeRequests()
 			 	.antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+			 	//regisztrációs felület
+			 	.antMatchers("/registration").permitAll()
+			 	//regisztrációt feldolgozó felület
+			 	.antMatchers("/reg").permitAll()
 				.antMatchers("/admin/**")
 					.hasRole("ADMIN")
 					//ezzel minden lekérdezést authentikációhoz kötünk, így csak a login és logout page-t fogja elérni a felhasználó
