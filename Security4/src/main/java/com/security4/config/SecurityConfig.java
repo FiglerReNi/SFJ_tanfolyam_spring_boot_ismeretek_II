@@ -12,29 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //a @Secured annotációhoz kell a securedEnabled = true
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	// Ennek a segítségével korlátlan felhasználót hozhatunk létre, a hitelesítést konfigurálhatjuk
-	@Autowired
-	public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
-		//a jelszavakat titkosítani kell
-		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-		auth
-				// belső memóriában történő authentikációt hívom meg
-				// állítok az authentikáción a következő userrel
-			.inMemoryAuthentication()
-				// itt állítok be usert
-				.withUser("reni")
-				// jelszó állítás
-				.password(passwordEncoder.encode("pass"))
-				// jogör beállítása
-				.roles("USER")
-				// második user beállítása
-			.and()
-				.withUser("sfj")
-				.password(passwordEncoder.encode("sfj"))
-				.roles("ADMIN");
-
-	}
 	
 	//Szerver viselkedés konfigurálása
 	@Override
