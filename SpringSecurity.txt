@@ -70,6 +70,21 @@ FrontEnd:
 		- controllerrel (@Controller + @RequestMapping)
 		- olyan osztállyal ami implementálja a WebMvcConfigurer interfacet, itt ki tudjuk kérni a registry-t ami tárol kapcsolódási pontokat a nézetek és az útvonalak között. És ebbe bele tudunk nyúlni.
 	- a security segítségével és a thymeleaf-el egyszerűen tudjuk szabályozni, hogymit lehessen csak bejelentkezve látni egy oldalon. Pl.: melyik html elemet: sec:authorize="isAuthenticated()" --> ezzel vizsgáljuk, hogy be van-e jelentkezve és ha igen csak akkor jelenik meg az adott elem.
+
+Adatbázis használata:
+	- dependency + application properties beállítások (heroku + jpa)
+	- http://127.0.0.1:63177/browser/# (pgAdmin 4 adatbázis ui)
+	- szükséges táblák:
+		- users (id, email, pass)
+		- roles (id, role)
+		- kapcs tábla (many to many kapcsolatnál célszerű a külön tábla)
+	- entityben a user, role és manytomany kapcsolattal a kapcs tábla létrehozása
+	
+Securitynek meg kell mondani, hogy az adatbázisból jövő értékeket használja.
+
+	
+
+
 	
 
 	
