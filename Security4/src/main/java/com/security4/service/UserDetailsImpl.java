@@ -16,7 +16,9 @@ import com.security4.entity.User;
 //Itt mondhatjuk meg a securitynek, hogy hogyan ismerjen fel egy usert, itt tudunk belenyúlni, hogy az adatbázisból vegye és hasonlítsa össze azt
 //aki be akar jelentkezni
 public class UserDetailsImpl implements UserDetails{
-
+	
+	private static final long serialVersionUID = 1L;
+	
 	//megadjuk a saját user objektumunkat, amit a beírt email alapján kikerestünk az adatbázisból
 	private User user;
 	
@@ -71,7 +73,7 @@ public class UserDetailsImpl implements UserDetails{
 	//engedélyezve van-e a fiók
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return user.getEnabled();
 	}
 
 }

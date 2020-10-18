@@ -1,5 +1,7 @@
 package com.security4.controller;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.security4.entity.User;
 import com.security4.service.EmailService;
@@ -72,9 +76,16 @@ public class HomeController {
 		log.debug(user.getEmail());
 		log.debug(user.getPassword());
 		//emailt küldünk a regisztrációról
-		emailService.sendMessage(user.getEmail());
 		userService.registerUser(user);
+		emailService.sendMessage(user.getEmail(), user.getActivation(), user.getFullName());
 		return "auth/login";
 	}
 	
+	//a link amire az emailben kattint az aktivációhoz
+	@RequestMapping(path= {"/activation/{code}"}, method = RequestMethod.GET)
+	public String activation(@PathVariable(value="code") String code, HttpServletResponse response) {
+		System.out.println("Teszt" + code);
+		userService.userActivation(code);
+		return "auth/login";		
+	}
 }

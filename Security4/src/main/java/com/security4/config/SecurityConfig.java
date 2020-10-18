@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			 	.antMatchers("/css/**", "/js/**", "/images/**").permitAll()
 			 	//regisztrációs felület
 			 	.antMatchers("/registration").permitAll()
+			 	.antMatchers("/activation/**").permitAll()
 			 	//regisztrációt feldolgozó felület
 			 	.antMatchers("/reg").permitAll()
 				.antMatchers("/admin/**")

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
+	
+	@Value("${project.activation.url}")
+	private String path;
 
 	private final Log log = LogFactory.getLog(this.getClass());
 	//be kell állítani a feladó email címet (ki tudjuk venni az application.properties-ből)
@@ -25,7 +28,7 @@ public class EmailService {
 	}
 	
 	//ezzel küldünk emailt, át kell adni azt az email címet ahová küldjük a mailt.
-	public void sendMessage(String email) {
+	public void sendMessage(String email, String code, String name) {
 		//ezt az objektumot tudjuk feltölteni a tartalommal:
 		/* - from email
 		 * - to email
@@ -37,7 +40,8 @@ public class EmailService {
 			msg.setFrom(MESSAGE_FROM);
 			msg.setTo(email);
 			msg.setSubject("Sikeres regisztrálás");
-			msg.setText("Kedves " + email + "! \n\n Köszönjük, hogy regisztráltál az oldalunkra");
+			msg.setText("Kedves " +name + "! \n\n Köszönjük, hogy regisztráltál az oldalunkra \n\n Kérlek aktiváld az email címed és kattints a linkre: \n\n"
+					+ path + code);
 			javaMailSender.send(msg);
 		} catch (Exception e) {
 			log.error("hiba email küldéskor az alábbi címre: " + email + " " + e);

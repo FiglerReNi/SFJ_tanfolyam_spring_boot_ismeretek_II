@@ -28,6 +28,11 @@ public class User {
 	private String password;
 	
 	private String fullName;
+	
+	//engedélyezve van-e a felhasználónak a belépés vagy nincs
+	private String activation;
+	
+	private Boolean enabled;
 	//az adatbázisban a user és role között egy kapcs táblát hozunk létre, mivel many to many a kapcsolat.
 	//ez kód oldalról így néz ki:
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
@@ -85,4 +90,22 @@ public class User {
 	public void addRole(String role) {
 		this.roles.add(new Role(role));
 	}
+
+	public String getActivation() {
+		return activation;
+	}
+
+	public void setActivation(String activation) {
+		this.activation = activation;
+	}
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	
 }
