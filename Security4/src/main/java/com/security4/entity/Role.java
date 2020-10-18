@@ -23,6 +23,10 @@ public class Role {
 	private Set<User> users = new HashSet<User>();
 	
 	private Role() {}
+	
+	public Role(String role) {
+		this.role = role;
+	}
 
 	public Long getId() {
 		return id;
