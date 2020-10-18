@@ -26,3 +26,5 @@ B változat interfaccel
 	UserService (interface) --> ebben regisztráljuk a létrehozni kívánt findByEmail functiont
 	UserServiceImpl --> kiterjeszti az interface-t így kötelező bele a findByEmail function, amiben használjuk a repoból a findByEmail-t
 	
+Az interfaceket és a serviceket gyakran külön package-be teszik
+	
