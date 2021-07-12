@@ -1,12 +1,9 @@
-JPA használata esetén is van lehetőség sql query-ket használni
-	@Query annotáció kell hozzá
-	Két lehetőség van:
-		- natív SQL
+
 		- JPQL: objektumként tekint a visszatérő adatra
 		
 JPA VS JDBC
 	Nem mindenhol használják a JPA-t, van ahol csak a JDBC-vel dolgoznak.
-	JPA: gyors, egyszerű a használata, viszont a lekérdezések sok esetben lassabbak lehetnek, hoszen egy plusz réteg ami használja a jdbc-t. De nem minden esetben igaz, hogy lassabb, jpa chachelése miatt van amikor ez a gyorsabb. Helyzettől függ.
+
 	JDBC: - itt nincsenek entityk csak sima pojo-k, így az adatbázis szerkezet sem jön létre ezek alapján.
 		  - a crudrepositoryt sem terjesztjük így ki a repokban.
 		  - a repok nem interfacek lesznek, hanem class-ok
