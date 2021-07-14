@@ -2,14 +2,7 @@
 	
 
 		
-Felhasználók hozzáadása:
-	-> az application.propertiesben az alap felhasználó + user írható felül (éles környezetben nem definiálunk itt felhasználó + jelszót, mert biztonsági kockázatot jelent)
-	-> általában a felhasználó adatbázisból jönnek (itt titkosítva tudjuk tárolni őket, biztonságosabb), de ha valami miatt ez nem megoldás, vagy például teszthez kell, akkor
-	-> kódban is definiálható a securityben felhasználó + jogkör, az alap beállítások felülírásával (de éles környezetben ilyet sem csinálunk)
-	-> hitelesítés konfigurálása: ConfigureAuth(AuthenticationManagerBuilder auth)
-	-> szerver viselkedés konfigurálása: A http security felügyeli a http forgalmat a szerver és a felhasználó között, ebbe szólhatunk bele és meghatározhatjuk, hogy mihez adunk hozzáférést, például mp3 fájlokhoz nem stb.
-		Ezt úgy érdemes kialakítani, hogy először mindent kizárunk és nem engedünk szinte semmit. És ez után nyitunk ki dolgokat.
-		Pl. a főoldalt bárki elérheti, aztán az admin oldalt az admin elérheti stb.
+
 		
 Cross-site request forgery:
 	internet biztonsági kockázatok:
