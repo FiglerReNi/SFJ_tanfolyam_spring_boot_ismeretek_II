@@ -1,16 +1,4 @@
-A Springnek egy modulja a Spring Security.
-	- Van egy alapértelmezett viselkedése, ami azonban felül írható.
-	- Különböző jogosultságokhoz köthetünk dolgokat, például, hogy adott oldalakat ki érjen el.
-	- Köthetjük bejelentkezéshez oldalak elérhetőségét.
-	- Bizonyos fájl típusok elérhetőségét korlátozhatjuk. Pl.: a szerveren tárolt mp3-akat ne lehessen elérni.
-	- A Spring Boot automatikusan össze tud állítani egy basic authenticationt.
-	
-Működése:
-	- Dependency-k közé ki kell választani a Spring Security-t
-	- Alap helyzetben egy default login oldallal kezd az alkalmazásunk (basic authentication)
-			Alap username: user
-			Alap jelszó: Generálja a Spring Security, a konzolon jelenik meg
-	- Az alap username + jelszó megváltoztatható az application.propertiesben
+
 	
 Felhsználás:
 (@Secured)
