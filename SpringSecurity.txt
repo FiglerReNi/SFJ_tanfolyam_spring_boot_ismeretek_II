@@ -6,22 +6,10 @@
 		
 
 
-FrontEnd:
-	- a thymeleafnek van egy securityhez tartozó dependencyje: (ezzel elérünk bizonyos adatokat)
-			<dependency>
-				<groupId>org.thymeleaf.extras</groupId>
-				<artifactId>thymeleaf-extras-springsecurity4</artifactId>
-				<version>2.1.2.RELEASE</version>
-			</dependency>
-	- namespace: xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-spring-security4"
 	
 
-	Visszairányítás a form tagben: th:action="@{/login}" --> így a spring securityhez kerülnek a bekért adatok
-
-	- nézetet és útvonalat több féle módon köthetünk össze:
-		
-	- a security segítségével és a thymeleaf-el egyszerűen tudjuk szabályozni, hogymit lehessen csak bejelentkezve látni egy oldalon. Pl.: melyik html elemet: sec:authorize="isAuthenticated()" --> ezzel vizsgáljuk, hogy be van-e jelentkezve és ha igen csak akkor jelenik meg az adott elem.
 	
+
 Bejelentkezés saját Login oldalról:
 	
 	- UserDetails interfacet kell kiterjeszteni, az adatok átadásához, és itt adjuk meg hogy az adatbázisból kiolvasott adatokat vizsgálja. 
