@@ -1,14 +1,5 @@
 
 
-			
-Thymeleaf fregmentek:
-	- Minden honlapon vannak olyan tartalmak, amelyek nem változnak az oldalakon pl. header, menü, footer. Ezeket célszerű csak egyszer létrehozni. Erre jók a fregmentek. Ezeket bármelyik html-ben felhasználhatjuk. 
-	- kell hozzá egy plusz dependency
-		<dependency>
-			<groupId>nz.net.ultraq.thymeleaf</groupId>
-			<artifactId>thymeleaf-layout-dialect</artifactId>
-		</dependency>
-	-namespace is: xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout
 	
 Regisztrációs felület:
 	- html form
