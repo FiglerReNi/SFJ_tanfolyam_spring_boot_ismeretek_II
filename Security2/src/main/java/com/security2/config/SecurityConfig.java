@@ -52,13 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 				.and()	
 				.formLogin()
-				//megadjuk, hogy ha kell a bejelentkező oldal az milyen útvonalon érhető el (ezzel felülírjuk az alapértelmezettet), ekkor
-				//kell lennie egy login.html-nek 
 					.loginPage("/login")
 					.permitAll()
 				.and()
-				//hová irányítsuk a felhasználót ha kijelentkezik, itt most nem egy külön oldalt csináltunk ennek, 
-				//hanem egy paraméter segítségével oldjuk meg.
 				.logout()
 					.logoutSuccessUrl("/login?logout")
 					.permitAll();
