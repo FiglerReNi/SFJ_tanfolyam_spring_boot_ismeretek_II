@@ -1,9 +1,0 @@
-Logolás:
-	Naplózás, hasonló mint a System.out.println. Lehet rendszerezni és kategorizálni az üzeneteket: pl info, debug stb.
-	Ezeket fájlokban tárolhatjuk.
-	Az application.propertiesben beállítható, hogy milyen szintű logokat akarunk látni. Pl. csak az infokat, vagy csak a debugokat stb. (logging.level.com.security2 = DEBUG = DEBUG) --> meg kell mondani melyik packagere vonatkozik ezért a com.security2 a végén.
-	DEBUG módban mindent látok
-	INFO módban csak az infókat
-	import org.slf4j.Logger;
-	import org.slf4j.LoggerFactory;
-	private final Logger log = LoggerFactory.getLogger(this.getClass());
