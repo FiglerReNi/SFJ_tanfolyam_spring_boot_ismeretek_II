@@ -10,17 +10,6 @@
 
 	
 
-Bejelentkezés saját Login oldalról:
-	
-	- UserDetails interfacet kell kiterjeszteni, az adatok átadásához, és itt adjuk meg hogy az adatbázisból kiolvasott adatokat vizsgálja. 
-	- Megmondjuk, hogy a mi osztályunkat használja az eredeti működés helyett. Ehhez ki kell terjesteni a UserDetailsService-t valamelyik serviceünkben, vagy újat is csinálhatunk neki.
-	- loadUserByUsername-t felül kell írni és átadni a mi user objektumunkat, amit az adatbázisból kerestünk ki.
-	
-Adatbázisba mentés:
-	- UserService interface-ben registerUser function
-	- kiterjesztjü a UserServiceImpl osztállyal és felülírjuk a methodot --> megmondjuk pontosan mit csináljon
-	- majd meghívjuk a HomeControllerben, ahol a felületről visszakapunk egy usert (amit el akarunk menteni) és átadjuk neki
-	- érdemes vizsgálni az email címet, hogy szerepel-e már az adatbázisban és jelezni a felhasználónak, ha van már ilyen emaillel regisztráció
 	
 Aktiválás:
 	- két új mező a user tánlához:
