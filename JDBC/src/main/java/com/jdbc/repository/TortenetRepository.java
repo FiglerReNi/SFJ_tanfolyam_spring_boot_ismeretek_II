@@ -22,6 +22,15 @@ public class TortenetRepository{
 		this.jdbc = jdbc;
 	}
 
+/*	Haználat:
+		Az eredmény egy resultSet lesz, ami a lenti függvények eredményeként tér vissza. A resultset-et egy rowMapper segítségével tudjuk objecté konvertálni. Ha az adatbázis oszlopnevek teljesen szinkronban vannak az objektummal akkor a beépített rowMapper-t lehet használni (new BeanPropertyRowMapper<>(Person.class)).
+		Ha nem, akkor pedig lehet definiálni custom rowMapper-t.
+			▪ Jdbc.query() - ha több objectet várunk vissza
+			▪ Jdbc.queryForObject() - ha egy objectet várunk vissza
+			▪ Update – az érintett sorok számával tér vissza
+	Feltétel:
+		Kell legyen üres konstruktora a model-nek, a BeanPropertyRowMapper miatt.*/
+
 	public List<Tortenet> findAll(){
 		String sql = "SELECT * FROM tortenetek ORDER BY posted DESC";
 		/*második paraméter azt mondja meg mi alapján állítsa össze az objektumokat:

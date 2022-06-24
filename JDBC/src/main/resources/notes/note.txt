@@ -1,0 +1,6 @@
+JDBC vs JPA:
+	• Nem tud adatbázis szerkezetet létrehozni, mint a jpa:
+		○  nem működnek azok az annotációk.
+		○  a crudrepositoryt sem terjesztjük így ki a repokban
+		○  repok nem interfacek lesznek, hanem class-ok
+    ○  schema-h2.sql-ben tudjuk definiálni az adatbázis szerezetet (táblákat)

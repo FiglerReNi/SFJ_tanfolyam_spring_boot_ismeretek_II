@@ -1,0 +1,23 @@
+Heroku:
+	Szerver környezetet tudunk kapni, ahová fel tudjuk tenni az adatbázisunkat. Van ingyenes változata is.
+	Automatikusan megcsinál mindent és ad egy szerver környezetet és adatbázist rá.
+	Heroku beállítása:
+			- create new app -> adatok kitöltése (az alkalmazás neve kisbetűvel kell kezdődjön)
+			- data.heroku.com: ha már van egy alkalmazásunk, akkor lehetőség van létrehozni egy adatbázis környezetet itt.
+				-> Heroku Postgres -> create one
+				-> Install Heroku Postgres
+				-> kiválasztjuk, hogy melyik alkalmazáshoz telepítse az adatbázist (korábban létrehozott szerverkörnyezet a create new appal)
+		Datastore->Settings->Database Credentials->View: adatbázis felhasználó név/ jelszó/ elérési út
+	A Heroku alapesetben postgreSQL adatbázisra ad lehetőséget.
+	Egy plus plugin telepítéssel azonban mySQL adatbázissal is dolgozhatunk.
+	Lépések:
+		https://dashboard.heroku.com/apps -> new (létrehozunk egy új alkalmazást)
+		belépünk az alkalmazásunkba
+		overview
+		configure add-ons
+		find more add-ons
+		ClearDB MySQL  -> install
+		be kell állítani melyik alkalmazás alá akarjuk létrehozni
+		https://dashboard.heroku.com/apps/herokualkalmazasmysql/settings -> Reveal Config Vars: itt találjuk a host-ot (az útvonal eleje a username:password) a @ jel után
+		overview -> clearDB -> adatbázis részletei
+	https://www.youtube.com/watch?v=aEm0BN493sU

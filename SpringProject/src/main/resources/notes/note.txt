@@ -1,0 +1,15 @@
+Entity:
+		A tábla nevek kisbetűsek kell legyenek, ezért az Entity mellett a name-l át kell nevezni
+    pl.: @Entity(name="bloggerek")
+
+JPA további lehetőségek:
+	JpaRepository kiterjesztésével
+		○ save()
+
+	EntityManager használatával
+		@PersistenceContext
+    EntityManager entityManager;
+		  ○ find()
+		  ○ merge() - objektummal tér vissza, ha adok át id-t, de nem találja, vagy nem adunk át id-t, akkor insertet csinál egyébként updatet
+		  ○ remove() - void lesz
+      ○ JPQL createNamedQuery -> az Entity fölött írjuk meg az sql-t
