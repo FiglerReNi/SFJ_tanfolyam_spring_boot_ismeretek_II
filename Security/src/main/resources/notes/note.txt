@@ -150,6 +150,25 @@ Cross-site request forgery:
   	• a bankok új módszere: a server a backendről a frontendre küld egy véletlen generált karakter sorozatot ez a CSRF token (Cross-site request forgery token) ezt egy hidden mezőben mellékelik a háttérben a formhoz, vagyis a hiteles oldalon ott lesz a token amikor elküldöm a lekérést és össze tudja hasonlítani a szerver a kiadott és kapottt tokent. A hacker hiába másolja le a formot, nem fogja tudni a véletlen számot hozzá.
   A Spring Bootban a CSRF token technológia alapból aktiválva van a login formhoz.
 
+Logolás:
+  A változat
+  import org.slf4j.Logger;
+  import org.slf4j.LoggerFactory;
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
+  B változat:
+  import org.apache.commons.logging.Log;
+  import org.apache.commons.logging.LogFactory;
+  private final Log log = LogFactory.getLog(this.getClass());
+  Hazsnálat:
+  	• Naplózás, hasonló mint a System.out.println.
+  	• Lehet rendszerezni és kategorizálni az üzeneteket: pl info, debug stb.
+  	• Ezeket fájlokban is tárolhatjuk, de konzolra is kiírhatjuk.
+  	• Az application.propertiesben beállítható, hogy milyen szintű logokat akarunk látni. Pl. csak az infokat, vagy csak a debugokat stb.
+  	• (logging.level.com.security2 = DEBUG) --> meg kell mondani melyik packagere vonatkozik ezért a com.security2 a végén.
+  	• DEBUG módban mindent látok
+  	• INFO módban csak az infókat
+
+
 
 
 
