@@ -1,0 +1,155 @@
+Security:
+  A Springnek egy modulja a Spring Security.
+  	Van egy alapértelmezett viselkedése, ami azonban felül írható.
+  	Különböző jogosultságokhoz köthetünk dolgokat, például, hogy adott oldalakat ki érjen el.
+  	köthetjük bejelentkezéshez oldalak elérhetőségét.
+  	bizonyos fájl típusok elérhetőségét korlátozhatjuk. Pl.: a szerveren tárolt mp3-akat ne lehessen elérni.
+  	 Spring Boot automatikusan össze tud állítani egy basic authenticationt.
+  Működése:
+  	Dependency-k közé ki kell választani a Spring Security-t
+  		<dependency>
+  			<groupId>org.springframework.security</groupId>
+  			<artifactId>spring-security-test</artifactId>
+  			<scope>test</scope>
+  		</dependency>
+  	Securityhez tartozó dependency
+  		<dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-starter-security</artifactId>
+  		</dependency>
+  	Alap helyzetben egy default login oldallal kezd az alkalmazásunk (basic authentication)
+  		Alap username: user
+  		Alap jelszó: Generálja a Spring Security, a konzolon jelenik me
+  	Az alap username + jelszó megváltoztatható az application.propertiesben
+  Felhsználás:
+  (@Secured)
+  	Megadhatjuk, hogy melyik kontrollerben, melyik függvényt milyen jogosultságú felhasználó érhet el.
+  		-> ehhez egy configurációs osztályt hozunk létre a @EnableGlobalMethodSecurity(securedEnabled = true) annotációval ellátva
+  		-> ki kell terjeszteni a  WebSecurityConfigurerAdapter ősosztályt
+  		-> szerepköröket generálunk az application.propertiesben
+  			 <dependency>
+  			   <groupId>org.springframework.security</groupId>
+  			   <artifactId>spring-security-config</artifactId>
+  			</dependency>
+  		-> az útvonal fölött megadhatom, hogy melyik szerepkörrel lehessen elérni az útvonalat: @Secured(value={"ROLE_szerepkör"})
+  		-> https://www.baeldung.com/spring-security-method-security
+  Útvonalak definiálása:
+  	• Útvonalakat definiálhatunk a @Controllerben, @RestControllerben a @RequestMapping annotációval a függvény neve, vagy az osztály neve felett.
+  	• Securityban a WebMvcConfigurer kiterjesztésével létrehozott osztályban. A registry tárol kapcsolódási pontokat a nézetek és az útvonalak között, ezt módosítjuk.
+  		@Override
+  		public void addViewControllers(ViewControllerRegistry registry){
+  			//hozzá adom az útvonalat és hogy hol van a html hozzá
+  			registry.addViewController("/login").setViewName("auth/login");
+  			registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+  		}
+  Felhasználók hozzáadása:
+  	• Általában a felhasználó, password és role adatbázisból jönnek (itt titkosítva tudjuk tárolni őket, biztonságosabb), de ha valami miatt ez nem megoldás, vagy például teszthez kell, akkor
+  		○  az application.propertiesben az alap felhasználó + user írható felül, amit a spring security adott (éles környezetben nem definiálunk itt felhasználó + jelszót, mert biztonsági kockázatot jelent)
+  		○ kódban is definiálható a securityben felhasználó + pass + jogkör, az alap beállítások felülírásával, és itt több is megadható (de éles környezetben ilyet sem csinálunk)
+  				@Autowired
+  				public void configureAuth(AuthenticationManagerBuilder auth) throws Exception {
+  					//a jelszavakat titkosítani kell
+  					PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+  					auth
+  							// belső memóriában történő authentikációt hívom meg
+  							// állítok az authentikáción a következő userrel
+  						.inMemoryAuthentication()
+  							.withUser("reni")
+  							.password(passwordEncoder.encode("pass"))
+  							.roles("USER")
+  						.and()
+  							.withUser("sfj")
+  							.password(passwordEncoder.encode("sfj"))
+  							.roles("ADMIN");}
+  Útvonalak elérhetősége:
+  	• Megadhatjuk a controllerben a @Secured annotáció használatával útvonalanként
+  	• Definiálhatjuk a szerver viselkedés konfigurálásával is a security segítségével:
+  		○  A http security felügyeli a http forgalmat a szerver és a felhasználó között, ebbe szólhatunk bele és meghatározhatjuk, hogy mihez adunk hozzáférést, például mp3 fájlokhoz nem stb.
+  		○ Két módszer van:
+  			§  engedélyezve van minden és néhány dologra hozunk szabályt
+  			§  előbb tiltunk mindent és fokozatosan nyitunk ki hozzáféréseet (ez a jobb)
+  				@Override
+  				protected void configure(HttpSecurity httpSec) throws Exception{
+  					httpSec
+  					//bizonyos requesteket engedélyezünk(első módszerre példa)
+  						.authorizeRequests()
+  						//gyökércsatornára irányuló GET lekérdezések figyelése
+  							.antMatchers(HttpMethod.GET, "/")
+  							//a fenti útvonalra érkező minden requestet engedélyezünk
+  								.permitAll()
+  							//jogosultság figyelés, az alábbi útvonalnál fIgyelje az Admin jogosultságot(ez kiváltja az apiControlleres @Secured figyelést)
+  							.antMatchers("/delete")
+  								.hasRole("ADMIN")
+  							//mindent figyeljen ami az admin/bármi (mp3, pdf, html stb) útvonalra irányul
+  							.antMatchers("/admin/**")
+  								.hasRole("ADMIN")
+  						//a bejelentkező felületet elérhetővé kell tenni, ahol vmilyen role kell az útvonalhoz (ha belenyúltunk itt az engedélyekbe, nem lesz automatikus mint korábban)
+  						.and()
+  						.formLogin()
+  							.permitAll();
+  Saját login oldal használata a security alap user+pass-al, vagy a security config felülírásával használt user+passhoz:
+  	Megadjuk, hogy ha kell a bejelentkező oldal az milyen útvonalon érhető el (ezzel felülírjuk az alapértelmezettet), ekkor kell lennie egy login.html-nek.
+  		 .loginPage("/login")
+  	Megadhatjuk, hogy logout esetén milyen oldalra irányítjuk.
+  		.logout()
+  		.logoutSuccessUrl("/login?logout")
+  		.permitAll();
+  	Minden lekérdezést authentikációhoz kötünk, így csak a login és logout page-t fogja elérni a felhasználó. Felette antmatchers().permitAll-al megadhatjuk amit el akarunk érni login nélkül is.
+  		.anyRequest().authenticated()
+  	Működés:
+  		○ Ha saját login oldalt használunk, akkor a login oldalról a beérkező bejelentkezési adatokat vissza kell juttatni a spring securitynak, hogy a normál folyamatait el tudja végezni, úgy mint ha a beépített login oldalt használnánk. Ehhez olyan formra van szükség aminek 3 fix része tuti van: felhasználónév + jelszó + mentés gomb.
+  Kell a thymeleaf-hoz tartozó security dependency, és a létrehozott formot tudjuk visszairányítani a securityhez.
+  			○ th:action="@{/login} --> így a spring securityhez kerülnek a bekért adatok
+  		○ Alapból csak a login és logout oldalt tesszük elérhetővé. Bárhová akar menni a felhasználó nem tudja elérni. Ha bejelentkezett, akkor arra az oldalra/aloldalra kerül, amit eredetileg beírt a böngészőbe.
+  Saját login oldal használata és az adatbázisban eltárolt userek használata a bejelentkezéshez:
+  	• A felületre beírt login adatokkal elmegyünk az adatbázisba és kikeressük a usert, ezt a user objektumot adjuk aztán át a spring securitynek.
+  	• UserDetails interfacet kell kiterjeszteni, ez a security-nek egy beépített interface, ahol meg tudjuk adni, hogy hogyan jelentkeztessen be egy usert az alap megoldás helyett, hiszen most adatbázisban van eltárolva a user. Nem config file-ban, vagy a security config felülírásával. Felül kell írni metódusokat, honnan vegye a felhasználónevet, jelszót és a role-t.
+  	• Ehhez a felülírt servie-hez el kell juttatnunk az adatbázisból kiszedett user objektumot, ezt a UserDetailsService kiterjesztésével tehetjük meg (ez is egy security beépített interface) és ennek felül kell írni a  loadUserByUsername metódusát és itt adjuk át az adatbázis user objektumot.
+  Saját regisztrációs oldal:
+  	A usereket és roleokat így adatbázisban tároljuk és onnan is olvassuk ki, vagyis nem fognak kelleni a security config felülírásával létrehozott beégetett userek és role-ok.
+  	Regisztrációs felület:
+  		Ø html form
+  		Ø SecurityConfigban engedélyezni az elérési utat (a html-hez és a feldolgozó oldalhoz is)
+  		Ø Login formra link a regisztrációhoz
+  		Ø controller requestMappinggel útvonal(a html-hez és a feldolgozó oldalhoz is)
+  		Ø a html megjelenítésekor átadunk egy üres usert is a Model-el
+  		Ø ezt feltölti a form és a /reg átveszi (a feldolgozó oldal) @ModelAttribute annotációval jön át a form adata
+  		Ø az adatot elmentjük pl egy adatbázisba, ehhez a jpa-val létrehozzuk a táblákat, figyelni kell a role-ra is.
+  		Ø login oldalra irányítjuk
+  		Fontos:
+  			○ jelszót kétszer egymás után be kell kérni
+  			○ kell validációt csinálni
+  			○ titkosítjuk a jelszavakat
+  			○ e-mailből aktiváltatjuk
+  	Aktiválás:
+  		Ø két új mező a user tánlához:
+  		Ø enabled és activation
+  		Ø ellenőrizzük, hogy szerepel e már az email cím (regisztráltek-e már vele)
+  		Ø enable alapból false
+  		Ø activationhoz pedig generálunk egy kulcsot
+  		Ø elküldjük emailben (application.properties-be a honlap linkjét és onnan veszzük i ezt az értéket)
+  		Ø linkre attintva a linkből kivesszük a kódot és ellenőrizzük adatbázisban
+  		Ø engedélyeznünk kell belépés nélkül az aktiváció + kód linkeket a configban
+
+Cross-site request forgery:
+  Internet biztonsági kockázatok:
+  	különböző adatok ellopása
+  	banki utalás a felhasználó saját számlájáról
+  Módszerek:
+  	• jelszófeltörések mellett sokkal jelentősebbek az egyéb eszközök
+  	• a http ürlapokat, kitölthető formokat lehet másolni
+  Példa:
+  A bank oldalán például kitöltöm a felhasználónevem és jelszavam + amit még kérnek, majd cserébe kapok egy tokent, ami azonosít, amíg a bank oldalán vagyok. Ezt tárolja a böngésző.
+  A pénzküldés felületen is egy űrlapot töltünk ki, majd küldés gomb és a kapott tokent használjuk. Az adatok Post-tal a bodyba kerülnek, ez biztonságosabb mint a get.
+  A hackerek küldenek sok embernek emailt, egy linkkel hogy jelentkezzenek be a bankjukba például:
+  	• vagy kamu oldalra visz a link, ahol ellopják a jelszót és felhasználó nevet
+  	• vagy egy ártalmatlan oldalra vezetnek, ahol írok egy kommentet stb és rányomok a küldés gombra, a háttérben ezen az oldalon van definiálva egy form kitöltve összeggel számlaszámmal, és mondjuk ha nem rég voltam bejelentkezve a bankomba akkor a böngészőm még mindig lehet őrzi azt a tokent. Így a küldés gombra elmegy a banknak a kérés.
+  Amit tehetünk:
+  	• jó jelszó és minden oldalra más
+  	• a bankok minden serverükre irányuló kérés esetén elkérik, hogy honnan érkezik a kérés (referer field - headerben van): banknak az oldaláról, vagy máshonnan, másik serverről. Ez nem mindig tud működni, van, hogy nem kerül bele a lekérés header részébe hogy honnan jön a kérés, a különböző böngészők, kiegészítő szoftverek, reklámblokkolók stb miatt. A header rész hamisítható is.
+  	• a bankok új módszere: a server a backendről a frontendre küld egy véletlen generált karakter sorozatot ez a CSRF token (Cross-site request forgery token) ezt egy hidden mezőben mellékelik a háttérben a formhoz, vagyis a hiteles oldalon ott lesz a token amikor elküldöm a lekérést és össze tudja hasonlítani a szerver a kiadott és kapottt tokent. A hacker hiába másolja le a formot, nem fogja tudni a véletlen számot hozzá.
+  A Spring Bootban a CSRF token technológia alapból aktiválva van a login formhoz.
+
+
+
+

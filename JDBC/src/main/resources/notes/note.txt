@@ -4,3 +4,29 @@ JDBC vs JPA:
 		○  a crudrepositoryt sem terjesztjük így ki a repokban
 		○  repok nem interfacek lesznek, hanem class-ok
     ○  schema-h2.sql-ben tudjuk definiálni az adatbázis szerezetet (táblákat)
+
+Dev Tools:
+  DevTools:
+  1.3. spring-boot-starter-parent verzió alatt nem működik
+  Új projekt esetén létrehozáskor a Web mellett a DevTools lehetőséget is pipáljuk be.
+  Már meglévő projekthez utólag hozzáadás: pom.xml fájl -> dependency-k közé:
+  	<dependency>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-devtools</artifactId>
+  		<version>1.3.0.RELEASE</version>
+  	</dependency>
+  Újra kell indítani az alkalmazást: run as spring boot app
+  Az újabb verziókban már benne van ez a devTools dependency alapból, így csak true-ra kell állítani, ha használni szeretnénk:
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-devtools</artifactId>
+          <optional>true</optional>
+      </dependency>
+  Előnye: ha változtatunk valamit a kódon és elmentjük, automatikusan újra indítja a tomcat szervert, és nem kell kézzel.
+  	Felismeri, hogy fejlesztői környezetben vagyunk, tehát élesen nem fog újraindítani semmit.
+  	Sokkal gyorsabban újraindul, mint amikor kézzek indítjuk újra az egészet, mivel ilyenkor csak az alkalmazáshoz tartozó osztályokat tölti újra, a dependencyk-hez tartozókat nem.
+  A böngészőkre pedig vannak olyan kiegészítők, amik lefrissítik magát az oldalt is, így a frissít gombot sem kell megnyomni.
+  Debug: Project-> jobb egérgomb -> run as -> run configurations -> Arguments fül: --debug
+  Részletesebben ír mit csinál és mit hogyan köt össze.
+
+
